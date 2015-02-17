@@ -2,6 +2,8 @@ var game = (function(){
 var game_matrix = [];
 var rows;
 var cols;
+var score = 0;
+var highScore;
 
 function reset_matrix(){
 
@@ -48,7 +50,14 @@ function render(){
 		else
 			document.getElementById(""+i).innerHTML =".";
 	}	
-
+	document.getElementById("user_score").innerHTML = "Score :" + score; 
+	
+	highScore = parseInt(localStorage.getItem("high_score"));
+	if(score>highScore){
+		highScore = score;
+		localStorage.setItem("high_score",""+highScore);
+		}
+	document.getElementById("high_score").innerHTML ="HighScore :" + highScore;
 }
 
 function clubHorizontally(){
@@ -62,6 +71,7 @@ function clubHorizontally(){
 						if(game_matrix[row][i]==game_matrix[row][j]){
 							//If Equal then Merge and Jump i .
 							game_matrix[row][i] = game_matrix[row][i]*2;
+							score += game_matrix[row][i];
 							game_matrix[row][j] = 0 ;
 							i=j;
 							}
@@ -83,6 +93,7 @@ function clubVertically(){
 					if(game_matrix[j][col]!=0){
 						if(game_matrix[i][col]==game_matrix[j][col]){
 							game_matrix[i][col] *=2;
+							score += game_matrix[i][col];
 							game_matrix[j][col] = 0;
 							i= j ;
 							//Jump	
@@ -206,9 +217,17 @@ return{
 	//console.log("IT is"+game_matrix[parseInt(p1/4)][parseInt(p1%4)]);
 	var p2 = getRandomPosition();
 	game_matrix[parseInt(p2/4)][parseInt(p2%4)] = 2;
-	render();
-
 	
+	
+	if(localStorage.getItem("high_score")==null){
+		high_score = 0;
+		localStorage.setItem("high_score",""+0);
+	}
+	else{
+	high_score = parseInt(localStorage.getItem("high_score"));
+	}
+
+	render();
 	}		  
 }
 

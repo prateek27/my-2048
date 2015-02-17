@@ -1,5 +1,5 @@
-#body{
-	overflow:hidden;
+body{
+	overflow:none;
 }
 #game_div{
 	margin:75px auto;
