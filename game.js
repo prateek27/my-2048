@@ -1,4 +1,5 @@
 var game = (function(){
+var prev_state = [];
 var game_matrix = [];
 var rows;
 var cols;
@@ -9,27 +10,33 @@ function reset_matrix(){
 
 	for(i=0;i<rows;i++){
 		game_matrix.push([]);
+		prev_state.push([]);
 	}
 	for(i=0;i<rows;i++){
 		for(j=0;j<cols;j++){
 			game_matrix[i][j] = 0;
+			prev_state.push([]);
 		}
 	}
 }
 function getRandomPosition(){
 	var empty_pos = [];
-
+	var game_over = true;
 	for(i=0;i<16;i++){
 			if(game_matrix[parseInt(i/4)][parseInt(i%4)] == 0){
 				empty_pos.push(i);
+				game_over = false;
 			}
-			//console.log(game_matrix[parseInt(i/4)][parseInt(i%4)]);
+			
 	}
-	//console.log(empty_pos);
+	if(game_over==true){
+		alert("Game Over , Your Score is " + score );
+		return 0;
+	}
+	else{
 	var rand_pos = Math.floor(Math.random()*empty_pos.length);
-	//console.log("random"+empty_pos[rand_pos]);
 	return empty_pos[rand_pos];
-
+	}
 }
 
 function getRandomNumber(){
