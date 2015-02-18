@@ -59,6 +59,8 @@ function render(){
 	}	
 	document.getElementById("user_score").innerHTML = "Score :" + score; 
 	
+	setColors();
+
 	highScore = parseInt(localStorage.getItem("high_score"));
 	if(score>highScore){
 		highScore = score;
@@ -212,12 +214,41 @@ function keyPressed(e){
     game_matrix[parseInt(p/4)][parseInt(p%4)] = parseInt(no);
 	render();
 }
+function getClassName(number){
+	console.log(number);
+	switch(number){
+		case 0:return "zero";
+		case 2:return "two";
+		case 4:return "four";
+		case 8:return "eight";
+		case 16:return "sixteen";
+		case 32:return "thirtytwo";
+		case 64 :return "sixty4";
+		case 128:return "one28";
+		case 256:return "two56";
+		case 512:return "five12";
+		case 1024:return "one024";
+		case 2048:return "two048";
+	}
+	return "biggerValues";
+}
+function setColors(){
+
+	for(i=0;i<16;i++){
+		var e = document.getElementById(""+i);
+		var class_name = getClassName(game_matrix[parseInt(i/4)][parseInt(i%4)]);
+		e.className = "tile";
+		e.className += " "+class_name;
+	}
+
+}
 return{
 	init:function(){
 
 	window.addEventListener("keydown",keyPressed,true);
 	rows = 4;
 	cols = 4;
+	score=0;
 	reset_matrix();
 	var p1 = getRandomPosition();
 	game_matrix[parseInt(p1/4)][parseInt(p1%4)] = parseInt(getRandomNumber());
